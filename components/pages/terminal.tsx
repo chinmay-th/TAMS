@@ -343,84 +343,787 @@ export function TerminalPage() {
         </TabsContent>
 
         <TabsContent value="operations" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Turnaround Performance</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Average Turnaround</span>
-                    <span className="font-bold">45 min</span>
+          {/* AI-Driven Turnaround Performance Intelligence */}
+          <Card className="card-enhanced">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <Plane className="w-5 h-5 text-blue-400" />
+                <span>AI Turnaround Performance Intelligence</span>
+                <Badge variant="outline" className="sci-fi-badge">
+                  ML-Powered
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="widget-card p-4 rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-white">Predictive Turnaround Analytics</h4>
+                      <Badge className="sci-fi-badge">Live AI</Badge>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Current Average</span>
+                        <span className="font-bold text-white">45 min</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">AI Predicted (Next 4h)</span>
+                        <span className="font-bold text-cyan-400">42 min</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Optimal Achievable</span>
+                        <span className="font-bold text-green-400">38 min</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Efficiency Score</span>
+                        <span className="font-bold text-purple-400">87.3%</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">On-Time Performance</span>
-                    <span className="font-bold text-green-600">87%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Bags On-Time</span>
-                    <span className="font-bold text-blue-600">94%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Gate Utilization</span>
-                    <span className="font-bold">78%</span>
+                  
+                  <div className="widget-card p-4 rounded-lg">
+                    <h4 className="font-medium text-white mb-3">Critical Path Analysis</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-2 bg-red-500/20 border border-red-500/30 rounded">
+                        <span className="text-red-300">Baggage Loading</span>
+                        <Badge variant="destructive">Bottleneck</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 bg-yellow-500/20 border border-yellow-500/30 rounded">
+                        <span className="text-yellow-300">Fuel Service</span>
+                        <Badge variant="default">Optimizable</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 bg-green-500/20 border border-green-500/30 rounded">
+                        <span className="text-green-300">Passenger Boarding</span>
+                        <Badge variant="secondary">Optimal</Badge>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                
+                <div className="space-y-4">
+                  <div className="widget-card p-4 rounded-lg">
+                    <h4 className="font-medium text-white mb-3">AI Optimization Recommendations</h4>
+                    <div className="space-y-3">
+                      <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-blue-300 font-medium">Parallel Service Optimization</span>
+                          <Badge className="sci-fi-badge">High Impact</Badge>
+                        </div>
+                        <p className="text-sm text-blue-400 mb-2">Coordinate fuel and catering services simultaneously</p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-blue-300">Potential savings:</span>
+                          <span className="text-green-400 font-bold">-8 minutes</span>
+                        </div>
+                        <Button 
+                          size="sm" 
+                          className="w-full mt-2 sci-fi-button"
+                          onClick={() => setPendingAction({
+                            title: 'Optimize Parallel Services',
+                            type: 'optimization',
+                            description: 'AI-coordinated parallel turnaround services',
+                            details: [
+                              'Synchronize fuel and catering schedules',
+                              'Optimize ground crew allocation',
+                              'Reduce aircraft ground time by 8 minutes',
+                              'Improve gate utilization efficiency'
+                            ],
+                            confidence: 92,
+                            eta: '30 minutes'
+                          }) || setShowActionModal(true)}
+                        >
+                          Implement Optimization
+                        </Button>
+                      </div>
+                      
+                      <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-purple-300 font-medium">Predictive Crew Scheduling</span>
+                          <Badge className="sci-fi-badge">Medium Impact</Badge>
+                        </div>
+                        <p className="text-sm text-purple-400 mb-2">AI-predicted crew requirements for peak efficiency</p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-purple-300">Efficiency gain:</span>
+                          <span className="text-green-400 font-bold">+12%</span>
+                        </div>
+                        <Button 
+                          size="sm" 
+                          className="w-full mt-2 sci-fi-button"
+                          onClick={() => setPendingAction({
+                            title: 'Deploy Predictive Crew Scheduling',
+                            type: 'workflow',
+                            description: 'AI-optimized crew allocation system',
+                            details: [
+                              'Machine learning crew demand prediction',
+                              'Dynamic shift optimization',
+                              'Real-time crew reallocation',
+                              'Performance tracking integration'
+                            ],
+                            confidence: 88,
+                            eta: '45 minutes'
+                          }) || setShowActionModal(true)}
+                        >
+                          Deploy AI Scheduling
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>CUPPS/CUTE Status</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Active Workstations</span>
-                    <Badge variant="secondary">127/135</Badge>
+          {/* AI-Enhanced CUPPS/CUTE Intelligence */}
+          <Card className="card-enhanced">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                <span>CUPPS/CUTE AI Operations Intelligence</span>
+                <Badge variant="outline" className="sci-fi-badge">
+                  Neural Network
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">System Health Analytics</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Active Workstations</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-white font-bold">127/135</span>
+                        <Badge variant="secondary">94.1%</Badge>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">AI Health Score</span>
+                      <span className="font-bold text-green-400">99.2%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Predicted Failures</span>
+                      <span className="font-bold text-yellow-400">2 in 72h</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Performance Trend</span>
+                      <div className="flex items-center space-x-1">
+                        <TrendingUp className="w-4 h-4 text-green-400" />
+                        <span className="text-green-400 font-bold">+2.3%</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">System Health</span>
-                    <Badge variant="secondary">99.2%</Badge>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-3 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'AI System Health Optimization',
+                      type: 'optimization',
+                      description: 'Proactive system maintenance and optimization',
+                      details: [
+                        'Predictive maintenance scheduling',
+                        'Performance bottleneck identification',
+                        'Resource allocation optimization',
+                        'Failure prevention protocols'
+                      ],
+                      confidence: 94,
+                      eta: '20 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Optimize System Health
+                  </Button>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Check-in Intelligence</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Active Counters</span>
+                      <span className="text-white font-bold">45/52</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">AI Queue Prediction</span>
+                      <span className="text-cyan-400 font-bold">8.2 min</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Passenger Flow Rate</span>
+                      <span className="text-white font-bold">247 pax/hr</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Efficiency Score</span>
+                      <span className="text-green-400 font-bold">91.8%</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Check-in Counters</span>
-                    <Badge variant="secondary">45/52</Badge>
+                  
+                  <div className="mt-3 p-2 bg-yellow-500/20 border border-yellow-500/30 rounded">
+                    <div className="flex items-center space-x-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-400" />
+                      <span className="text-xs text-yellow-300">Peak hour approaching - deploy 3 more counters</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Gate Positions</span>
-                    <Badge variant="secondary">82/88</Badge>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-2 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Deploy Additional Check-in Counters',
+                      type: 'workflow',
+                      priority: 'medium',
+                      description: 'AI-predicted counter deployment for peak efficiency',
+                      details: [
+                        'Open 3 additional check-in counters',
+                        'Redeploy staff from low-traffic areas',
+                        'Update passenger flow signage',
+                        'Monitor queue reduction in real-time'
+                      ],
+                      assignee: 'Terminal Operations Manager',
+                      eta: '15 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Deploy Counters
+                  </Button>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Gate Position Analytics</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Occupied Gates</span>
+                      <span className="text-white font-bold">82/88</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Utilization Rate</span>
+                      <span className="text-white font-bold">93.2%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">AI Conflict Detection</span>
+                      <span className="text-green-400 font-bold">0 conflicts</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Next Available</span>
+                      <span className="text-cyan-400 font-bold">Gate C12 (18 min)</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-3 p-2 bg-blue-500/20 border border-blue-500/30 rounded">
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-blue-400" />
+                      <span className="text-xs text-blue-300">AI gate assignment optimization active</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-2 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Optimize Gate Assignments',
+                      type: 'optimization',
+                      description: 'AI-driven gate allocation optimization',
+                      details: [
+                        'Machine learning gate assignment',
+                        'Minimize passenger walking distances',
+                        'Optimize turnaround times',
+                        'Reduce gate conflicts by 95%'
+                      ],
+                      confidence: 96,
+                      eta: '10 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Optimize Assignments
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Turnaround Bottleneck Analysis</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-2 bg-red-500/20 border border-red-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <AlertTriangle className="w-4 h-4 text-red-400" />
+                        <span className="text-red-300">Baggage Loading Delay</span>
+                      </div>
+                      <span className="text-red-400 font-bold">+12 min</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-yellow-500/20 border border-yellow-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <Clock className="w-4 h-4 text-yellow-400" />
+                        <span className="text-yellow-300">Fuel Service Queue</span>
+                      </div>
+                      <span className="text-yellow-400 font-bold">+5 min</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-green-500/20 border border-green-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span className="text-green-300">Cleaning Service</span>
+                      </div>
+                      <span className="text-green-400 font-bold">On time</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-3 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Resolve Turnaround Bottlenecks',
+                      type: 'workflow',
+                      priority: 'high',
+                      description: 'AI-identified bottleneck resolution',
+                      details: [
+                        'Deploy additional baggage loading crew',
+                        'Optimize fuel service scheduling',
+                        'Implement parallel service protocols',
+                        'Real-time performance monitoring'
+                      ],
+                      assignee: 'Ground Operations Manager',
+                      eta: '25 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Resolve Bottlenecks
+                  </Button>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Performance Forecasting</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Next Hour Forecast</span>
+                      <span className="text-cyan-400 font-bold">43 min avg</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Peak Hour Impact</span>
+                      <span className="text-yellow-400 font-bold">+8 min</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Weather Adjustment</span>
+                      <span className="text-green-400 font-bold">-2 min</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Confidence Level</span>
+                      <span className="text-purple-400 font-bold">94.7%</span>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Flight Information Display</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Active Displays</span>
-                    <Badge variant="secondary">156/160</Badge>
+          {/* AI-Enhanced Flight Information Display System */}
+          <Card className="card-enhanced">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <Users className="w-5 h-5 text-purple-400" />
+                <span>AI Flight Information Display Intelligence</span>
+                <Badge variant="outline" className="sci-fi-badge">
+                  Smart Content
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="widget-card p-4 rounded-lg">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium text-white">Smart Display Management</h4>
+                      <Badge className="sci-fi-badge">AI-Driven</Badge>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Active Displays</span>
+                        <span className="text-white font-bold">156/160</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">AI Content Optimization</span>
+                        <span className="text-green-400 font-bold">Real-time</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Passenger Engagement</span>
+                        <span className="text-cyan-400 font-bold">87.3%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-blue-300">Content Relevance Score</span>
+                        <span className="text-purple-400 font-bold">94.1%</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Content Updates</span>
-                    <Badge variant="secondary">Real-time</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">System Status</span>
-                    <Badge variant="secondary">Operational</Badge>
-                  </div>
-                  <div className="mt-3 p-2 bg-blue-50 rounded">
-                    <p className="text-xs text-blue-800">Last update: 2 seconds ago</p>
+                  
+                  <div className="widget-card p-4 rounded-lg">
+                    <h4 className="font-medium text-white mb-3">Predictive Content Analytics</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-2 bg-blue-500/20 border border-blue-500/30 rounded">
+                        <span className="text-blue-300">Gate Change Predictions</span>
+                        <Badge className="sci-fi-badge">3 predicted</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 bg-green-500/20 border border-green-500/30 rounded">
+                        <span className="text-green-300">Delay Notifications</span>
+                        <Badge variant="secondary">Auto-generated</Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-2 bg-purple-500/20 border border-purple-500/30 rounded">
+                        <span className="text-purple-300">Passenger Guidance</span>
+                        <Badge className="sci-fi-badge">Personalized</Badge>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+                
+                <div className="space-y-4">
+                  <div className="widget-card p-4 rounded-lg">
+                    <h4 className="font-medium text-white mb-3">AI Content Intelligence</h4>
+                    <div className="space-y-3">
+                      <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-green-300 font-medium">Dynamic Wayfinding</span>
+                          <Badge className="sci-fi-badge">Active</Badge>
+                        </div>
+                        <p className="text-sm text-green-400 mb-2">AI-powered route optimization based on real-time congestion</p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-green-300">Passenger satisfaction:</span>
+                          <span className="text-green-400 font-bold">+18%</span>
+                        </div>
+                        <Button 
+                          size="sm" 
+                          className="w-full mt-2 sci-fi-button"
+                          onClick={() => setPendingAction({
+                            title: 'Enhance Dynamic Wayfinding',
+                            type: 'optimization',
+                            description: 'Advanced AI wayfinding system deployment',
+                            details: [
+                              'Real-time congestion analysis',
+                              'Personalized route recommendations',
+                              'Multi-language support enhancement',
+                              'Accessibility optimization'
+                            ],
+                            confidence: 91,
+                            eta: '35 minutes'
+                          }) || setShowActionModal(true)}
+                        >
+                          Enhance Wayfinding
+                        </Button>
+                      </div>
+                      
+                      <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-blue-300 font-medium">Predictive Messaging</span>
+                          <Badge className="sci-fi-badge">Learning</Badge>
+                        </div>
+                        <p className="text-sm text-blue-400 mb-2">ML-driven proactive passenger notifications</p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-blue-300">Accuracy rate:</span>
+                          <span className="text-blue-400 font-bold">96.2%</span>
+                        </div>
+                        <Button 
+                          size="sm" 
+                          className="w-full mt-2 sci-fi-button"
+                          onClick={() => setPendingAction({
+                            title: 'Deploy Predictive Messaging',
+                            type: 'control',
+                            description: 'AI-powered proactive passenger communication',
+                            details: [
+                              'Predictive delay notifications',
+                              'Proactive gate change alerts',
+                              'Personalized service recommendations',
+                              'Multi-channel message distribution'
+                            ],
+                            confidence: 89,
+                            eta: '20 minutes'
+                          }) || setShowActionModal(true)}
+                        >
+                          Deploy Messaging
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 widget-card p-4 rounded-lg">
+                <h4 className="font-medium text-white mb-3">Display Network Intelligence</h4>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-400">156</p>
+                    <p className="text-xs text-blue-300">Active Displays</p>
+                    <p className="text-xs text-green-400">97.5% uptime</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-green-400">2.1s</p>
+                    <p className="text-xs text-blue-300">Update Latency</p>
+                    <p className="text-xs text-green-400">Real-time sync</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-purple-400">94.1%</p>
+                    <p className="text-xs text-blue-300">Content Relevance</p>
+                    <p className="text-xs text-purple-400">AI-optimized</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-cyan-400">12,847</p>
+                    <p className="text-xs text-blue-300">Daily Interactions</p>
+                    <p className="text-xs text-cyan-400">Touch & mobile</p>
+                  </div>
+                </div>
+                
+                <div className="mt-4 flex space-x-4">
+                  <Button 
+                    className="flex-1 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'AI Content Optimization',
+                      type: 'optimization',
+                      description: 'Machine learning content personalization',
+                      details: [
+                        'Passenger behavior analysis',
+                        'Dynamic content prioritization',
+                        'Multi-language optimization',
+                        'Accessibility enhancement'
+                      ],
+                      confidence: 93,
+                      eta: '15 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Optimize Content
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Deploy Predictive Maintenance',
+                      type: 'maintenance',
+                      description: 'AI-driven display system maintenance',
+                      details: [
+                        'Predictive failure analysis',
+                        'Proactive component replacement',
+                        'Performance optimization',
+                        'Zero-downtime maintenance'
+                      ],
+                      confidence: 87,
+                      eta: '45 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Predictive Maintenance
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* AI Passenger Experience Optimization */}
+          <Card className="card-enhanced">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <TrendingUp className="w-5 h-5 text-green-400" />
+                <span>AI Passenger Experience Optimization</span>
+                <Badge variant="outline" className="sci-fi-badge">
+                  Deep Learning
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Journey Analytics</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Avg Journey Time</span>
+                      <span className="text-white font-bold">47 min</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Satisfaction Score</span>
+                      <span className="text-green-400 font-bold">4.2/5.0</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Pain Point Detection</span>
+                      <span className="text-yellow-400 font-bold">3 identified</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">AI Recommendations</span>
+                      <span className="text-purple-400 font-bold">7 active</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-3 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Optimize Passenger Journey',
+                      type: 'optimization',
+                      description: 'AI-driven passenger experience enhancement',
+                      details: [
+                        'Journey mapping optimization',
+                        'Pain point resolution',
+                        'Service touchpoint enhancement',
+                        'Real-time satisfaction monitoring'
+                      ],
+                      confidence: 91,
+                      eta: '40 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Optimize Journey
+                  </Button>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Behavioral Intelligence</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Dwell Time Prediction</span>
+                      <span className="text-cyan-400 font-bold">28.4 min</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Service Utilization</span>
+                      <span className="text-white font-bold">73.2%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Flow Optimization</span>
+                      <span className="text-green-400 font-bold">+15% efficiency</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Congestion Prediction</span>
+                      <span className="text-purple-400 font-bold">Gate B15 (20 min)</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-3 p-2 bg-yellow-500/20 border border-yellow-500/30 rounded">
+                    <div className="flex items-center space-x-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-400" />
+                      <span className="text-xs text-yellow-300">Congestion predicted at Gate B15 in 20 minutes</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-2 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Deploy Congestion Mitigation',
+                      type: 'workflow',
+                      priority: 'medium',
+                      description: 'AI-predicted congestion prevention',
+                      details: [
+                        'Redirect passenger flow to alternate routes',
+                        'Deploy additional staff to Gate B15',
+                        'Update dynamic signage and announcements',
+                        'Monitor congestion reduction in real-time'
+                      ],
+                      assignee: 'Terminal Operations Team',
+                      eta: '15 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Prevent Congestion
+                  </Button>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Intelligent Messaging</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Messages Sent (24h)</span>
+                      <span className="text-white font-bold">2,847</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">AI Personalization</span>
+                      <span className="text-green-400 font-bold">89.3%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Language Detection</span>
+                      <span className="text-cyan-400 font-bold">12 languages</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Response Rate</span>
+                      <span className="text-purple-400 font-bold">76.8%</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-3 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Enhance AI Messaging System',
+                      type: 'optimization',
+                      description: 'Advanced passenger communication intelligence',
+                      details: [
+                        'Natural language processing enhancement',
+                        'Sentiment analysis integration',
+                        'Proactive service recommendations',
+                        'Multi-modal communication optimization'
+                      ],
+                      confidence: 88,
+                      eta: '30 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Enhance Messaging
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">Real-time Display Analytics</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-2 bg-green-500/20 border border-green-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <span className="text-green-300">Content Sync Status</span>
+                      </div>
+                      <span className="text-green-400 font-bold">100%</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-blue-500/20 border border-blue-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <Activity className="w-4 h-4 text-blue-400" />
+                        <span className="text-blue-300">Update Frequency</span>
+                      </div>
+                      <span className="text-blue-400 font-bold">2.1 sec</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-purple-500/20 border border-purple-500/30 rounded">
+                      <div className="flex items-center space-x-2">
+                        <Users className="w-4 h-4 text-purple-400" />
+                        <span className="text-purple-300">Passenger Interactions</span>
+                      </div>
+                      <span className="text-purple-400 font-bold">12,847</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="widget-card p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-3">AI Performance Insights</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Content Effectiveness</span>
+                      <span className="text-green-400 font-bold">94.1%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Passenger Engagement</span>
+                      <span className="text-cyan-400 font-bold">87.3%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">System Learning Rate</span>
+                      <span className="text-purple-400 font-bold">+2.4% daily</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-300">Prediction Accuracy</span>
+                      <span className="text-white font-bold">96.2%</span>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    size="sm" 
+                    className="w-full mt-3 sci-fi-button"
+                    onClick={() => setPendingAction({
+                      title: 'Advanced AI Analytics Deployment',
+                      type: 'optimization',
+                      description: 'Next-generation display intelligence system',
+                      details: [
+                        'Deep learning passenger behavior analysis',
+                        'Predictive content optimization',
+                        'Real-time performance enhancement',
+                        'Advanced personalization algorithms'
+                      ],
+                      confidence: 95,
+                      eta: '50 minutes'
+                    }) || setShowActionModal(true)}
+                  >
+                    Deploy Advanced AI
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
       
