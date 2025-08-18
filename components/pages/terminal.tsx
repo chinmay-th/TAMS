@@ -17,7 +17,10 @@ import {
   Wifi,
   Luggage,
   Shield,
-  TrendingUp
+  TrendingUp,
+  ArrowRight,
+  Plane,
+  Activity
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 
@@ -27,8 +30,7 @@ export function TerminalPage() {
   const [showActionModal, setShowActionModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<any>(null);
   
-  ArrowRight,
-  Plane
+  const queueData = [
     { name: '14:00', checkpoint_A: 8, checkpoint_B: 12, checkpoint_C: 15, checkpoint_D: 6 },
     { name: '14:15', checkpoint_A: 12, checkpoint_B: 15, checkpoint_C: 18, checkpoint_D: 8 },
     { name: '14:30', checkpoint_A: 15, checkpoint_B: 18, checkpoint_C: 22, checkpoint_D: 10 },
@@ -419,19 +421,22 @@ export function TerminalPage() {
                         <Button 
                           size="sm" 
                           className="w-full mt-2 sci-fi-button"
-                          onClick={() => setPendingAction({
-                            title: 'Optimize Parallel Services',
-                            type: 'optimization',
-                            description: 'AI-coordinated parallel turnaround services',
-                            details: [
-                              'Synchronize fuel and catering schedules',
-                              'Optimize ground crew allocation',
-                              'Reduce aircraft ground time by 8 minutes',
-                              'Improve gate utilization efficiency'
-                            ],
-                            confidence: 92,
-                            eta: '30 minutes'
-                          }) || setShowActionModal(true)}
+                          onClick={() => {
+                            setPendingAction({
+                              title: 'Optimize Parallel Services',
+                              type: 'optimization',
+                              description: 'AI-coordinated parallel turnaround services',
+                              details: [
+                                'Synchronize fuel and catering schedules',
+                                'Optimize ground crew allocation',
+                                'Reduce aircraft ground time by 8 minutes',
+                                'Improve gate utilization efficiency'
+                              ],
+                              confidence: 92,
+                              eta: '30 minutes'
+                            });
+                            setShowActionModal(true);
+                          }}
                         >
                           Implement Optimization
                         </Button>
@@ -450,19 +455,22 @@ export function TerminalPage() {
                         <Button 
                           size="sm" 
                           className="w-full mt-2 sci-fi-button"
-                          onClick={() => setPendingAction({
-                            title: 'Deploy Predictive Crew Scheduling',
-                            type: 'workflow',
-                            description: 'AI-optimized crew allocation system',
-                            details: [
-                              'Machine learning crew demand prediction',
-                              'Dynamic shift optimization',
-                              'Real-time crew reallocation',
-                              'Performance tracking integration'
-                            ],
-                            confidence: 88,
-                            eta: '45 minutes'
-                          }) || setShowActionModal(true)}
+                          onClick={() => {
+                            setPendingAction({
+                              title: 'Deploy Predictive Crew Scheduling',
+                              type: 'workflow',
+                              description: 'AI-optimized crew allocation system',
+                              details: [
+                                'Machine learning crew demand prediction',
+                                'Dynamic shift optimization',
+                                'Real-time crew reallocation',
+                                'Performance tracking integration'
+                              ],
+                              confidence: 88,
+                              eta: '45 minutes'
+                            });
+                            setShowActionModal(true);
+                          }}
                         >
                           Deploy AI Scheduling
                         </Button>
@@ -517,19 +525,22 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-3 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'AI System Health Optimization',
-                      type: 'optimization',
-                      description: 'Proactive system maintenance and optimization',
-                      details: [
-                        'Predictive maintenance scheduling',
-                        'Performance bottleneck identification',
-                        'Resource allocation optimization',
-                        'Failure prevention protocols'
-                      ],
-                      confidence: 94,
-                      eta: '20 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'AI System Health Optimization',
+                        type: 'optimization',
+                        description: 'Proactive system maintenance and optimization',
+                        details: [
+                          'Predictive maintenance scheduling',
+                          'Performance bottleneck identification',
+                          'Resource allocation optimization',
+                          'Failure prevention protocols'
+                        ],
+                        confidence: 94,
+                        eta: '20 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Optimize System Health
                   </Button>
@@ -566,20 +577,23 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-2 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Deploy Additional Check-in Counters',
-                      type: 'workflow',
-                      priority: 'medium',
-                      description: 'AI-predicted counter deployment for peak efficiency',
-                      details: [
-                        'Open 3 additional check-in counters',
-                        'Redeploy staff from low-traffic areas',
-                        'Update passenger flow signage',
-                        'Monitor queue reduction in real-time'
-                      ],
-                      assignee: 'Terminal Operations Manager',
-                      eta: '15 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Deploy Additional Check-in Counters',
+                        type: 'workflow',
+                        priority: 'medium',
+                        description: 'AI-predicted counter deployment for peak efficiency',
+                        details: [
+                          'Open 3 additional check-in counters',
+                          'Redeploy staff from low-traffic areas',
+                          'Update passenger flow signage',
+                          'Monitor queue reduction in real-time'
+                        ],
+                        assignee: 'Terminal Operations Manager',
+                        eta: '15 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Deploy Counters
                   </Button>
@@ -616,19 +630,22 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-2 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Optimize Gate Assignments',
-                      type: 'optimization',
-                      description: 'AI-driven gate allocation optimization',
-                      details: [
-                        'Machine learning gate assignment',
-                        'Minimize passenger walking distances',
-                        'Optimize turnaround times',
-                        'Reduce gate conflicts by 95%'
-                      ],
-                      confidence: 96,
-                      eta: '10 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Optimize Gate Assignments',
+                        type: 'optimization',
+                        description: 'AI-driven gate allocation optimization',
+                        details: [
+                          'Machine learning gate assignment',
+                          'Minimize passenger walking distances',
+                          'Optimize turnaround times',
+                          'Reduce gate conflicts by 95%'
+                        ],
+                        confidence: 96,
+                        eta: '10 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Optimize Assignments
                   </Button>
@@ -665,20 +682,23 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-3 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Resolve Turnaround Bottlenecks',
-                      type: 'workflow',
-                      priority: 'high',
-                      description: 'AI-identified bottleneck resolution',
-                      details: [
-                        'Deploy additional baggage loading crew',
-                        'Optimize fuel service scheduling',
-                        'Implement parallel service protocols',
-                        'Real-time performance monitoring'
-                      ],
-                      assignee: 'Ground Operations Manager',
-                      eta: '25 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Resolve Turnaround Bottlenecks',
+                        type: 'workflow',
+                        priority: 'high',
+                        description: 'AI-identified bottleneck resolution',
+                        details: [
+                          'Deploy additional baggage loading crew',
+                          'Optimize fuel service scheduling',
+                          'Implement parallel service protocols',
+                          'Real-time performance monitoring'
+                        ],
+                        assignee: 'Ground Operations Manager',
+                        eta: '25 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Resolve Bottlenecks
                   </Button>
@@ -784,19 +804,22 @@ export function TerminalPage() {
                         <Button 
                           size="sm" 
                           className="w-full mt-2 sci-fi-button"
-                          onClick={() => setPendingAction({
-                            title: 'Enhance Dynamic Wayfinding',
-                            type: 'optimization',
-                            description: 'Advanced AI wayfinding system deployment',
-                            details: [
-                              'Real-time congestion analysis',
-                              'Personalized route recommendations',
-                              'Multi-language support enhancement',
-                              'Accessibility optimization'
-                            ],
-                            confidence: 91,
-                            eta: '35 minutes'
-                          }) || setShowActionModal(true)}
+                          onClick={() => {
+                            setPendingAction({
+                              title: 'Enhance Dynamic Wayfinding',
+                              type: 'optimization',
+                              description: 'Advanced AI wayfinding system deployment',
+                              details: [
+                                'Real-time congestion analysis',
+                                'Personalized route recommendations',
+                                'Multi-language support enhancement',
+                                'Accessibility optimization'
+                              ],
+                              confidence: 91,
+                              eta: '35 minutes'
+                            });
+                            setShowActionModal(true);
+                          }}
                         >
                           Enhance Wayfinding
                         </Button>
@@ -815,19 +838,22 @@ export function TerminalPage() {
                         <Button 
                           size="sm" 
                           className="w-full mt-2 sci-fi-button"
-                          onClick={() => setPendingAction({
-                            title: 'Deploy Predictive Messaging',
-                            type: 'control',
-                            description: 'AI-powered proactive passenger communication',
-                            details: [
-                              'Predictive delay notifications',
-                              'Proactive gate change alerts',
-                              'Personalized service recommendations',
-                              'Multi-channel message distribution'
-                            ],
-                            confidence: 89,
-                            eta: '20 minutes'
-                          }) || setShowActionModal(true)}
+                          onClick={() => {
+                            setPendingAction({
+                              title: 'Deploy Predictive Messaging',
+                              type: 'control',
+                              description: 'AI-powered proactive passenger communication',
+                              details: [
+                                'Predictive delay notifications',
+                                'Proactive gate change alerts',
+                                'Personalized service recommendations',
+                                'Multi-channel message distribution'
+                              ],
+                              confidence: 89,
+                              eta: '20 minutes'
+                            });
+                            setShowActionModal(true);
+                          }}
                         >
                           Deploy Messaging
                         </Button>
@@ -865,38 +891,44 @@ export function TerminalPage() {
                 <div className="mt-4 flex space-x-4">
                   <Button 
                     className="flex-1 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'AI Content Optimization',
-                      type: 'optimization',
-                      description: 'Machine learning content personalization',
-                      details: [
-                        'Passenger behavior analysis',
-                        'Dynamic content prioritization',
-                        'Multi-language optimization',
-                        'Accessibility enhancement'
-                      ],
-                      confidence: 93,
-                      eta: '15 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'AI Content Optimization',
+                        type: 'optimization',
+                        description: 'Machine learning content personalization',
+                        details: [
+                          'Passenger behavior analysis',
+                          'Dynamic content prioritization',
+                          'Multi-language optimization',
+                          'Accessibility enhancement'
+                        ],
+                        confidence: 93,
+                        eta: '15 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Optimize Content
                   </Button>
                   <Button 
                     variant="outline" 
                     className="flex-1 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Deploy Predictive Maintenance',
-                      type: 'maintenance',
-                      description: 'AI-driven display system maintenance',
-                      details: [
-                        'Predictive failure analysis',
-                        'Proactive component replacement',
-                        'Performance optimization',
-                        'Zero-downtime maintenance'
-                      ],
-                      confidence: 87,
-                      eta: '45 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Deploy Predictive Maintenance',
+                        type: 'maintenance',
+                        description: 'AI-driven display system maintenance',
+                        details: [
+                          'Predictive failure analysis',
+                          'Proactive component replacement',
+                          'Performance optimization',
+                          'Zero-downtime maintenance'
+                        ],
+                        confidence: 87,
+                        eta: '45 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Predictive Maintenance
                   </Button>
@@ -942,19 +974,22 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-3 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Optimize Passenger Journey',
-                      type: 'optimization',
-                      description: 'AI-driven passenger experience enhancement',
-                      details: [
-                        'Journey mapping optimization',
-                        'Pain point resolution',
-                        'Service touchpoint enhancement',
-                        'Real-time satisfaction monitoring'
-                      ],
-                      confidence: 91,
-                      eta: '40 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Optimize Passenger Journey',
+                        type: 'optimization',
+                        description: 'AI-driven passenger experience enhancement',
+                        details: [
+                          'Journey mapping optimization',
+                          'Pain point resolution',
+                          'Service touchpoint enhancement',
+                          'Real-time satisfaction monitoring'
+                        ],
+                        confidence: 91,
+                        eta: '40 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Optimize Journey
                   </Button>
@@ -991,20 +1026,23 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-2 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Deploy Congestion Mitigation',
-                      type: 'workflow',
-                      priority: 'medium',
-                      description: 'AI-predicted congestion prevention',
-                      details: [
-                        'Redirect passenger flow to alternate routes',
-                        'Deploy additional staff to Gate B15',
-                        'Update dynamic signage and announcements',
-                        'Monitor congestion reduction in real-time'
-                      ],
-                      assignee: 'Terminal Operations Team',
-                      eta: '15 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Deploy Congestion Mitigation',
+                        type: 'workflow',
+                        priority: 'medium',
+                        description: 'AI-predicted congestion prevention',
+                        details: [
+                          'Redirect passenger flow to alternate routes',
+                          'Deploy additional staff to Gate B15',
+                          'Update dynamic signage and announcements',
+                          'Monitor congestion reduction in real-time'
+                        ],
+                        assignee: 'Terminal Operations Team',
+                        eta: '15 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Prevent Congestion
                   </Button>
@@ -1034,19 +1072,22 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-3 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Enhance AI Messaging System',
-                      type: 'optimization',
-                      description: 'Advanced passenger communication intelligence',
-                      details: [
-                        'Natural language processing enhancement',
-                        'Sentiment analysis integration',
-                        'Proactive service recommendations',
-                        'Multi-modal communication optimization'
-                      ],
-                      confidence: 88,
-                      eta: '30 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Enhance AI Messaging System',
+                        type: 'optimization',
+                        description: 'Advanced passenger communication intelligence',
+                        details: [
+                          'Natural language processing enhancement',
+                          'Sentiment analysis integration',
+                          'Proactive service recommendations',
+                          'Multi-modal communication optimization'
+                        ],
+                        confidence: 88,
+                        eta: '30 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Enhance Messaging
                   </Button>
@@ -1105,19 +1146,22 @@ export function TerminalPage() {
                   <Button 
                     size="sm" 
                     className="w-full mt-3 sci-fi-button"
-                    onClick={() => setPendingAction({
-                      title: 'Advanced AI Analytics Deployment',
-                      type: 'optimization',
-                      description: 'Next-generation display intelligence system',
-                      details: [
-                        'Deep learning passenger behavior analysis',
-                        'Predictive content optimization',
-                        'Real-time performance enhancement',
-                        'Advanced personalization algorithms'
-                      ],
-                      confidence: 95,
-                      eta: '50 minutes'
-                    }) || setShowActionModal(true)}
+                    onClick={() => {
+                      setPendingAction({
+                        title: 'Advanced AI Analytics Deployment',
+                        type: 'optimization',
+                        description: 'Next-generation display intelligence system',
+                        details: [
+                          'Deep learning passenger behavior analysis',
+                          'Predictive content optimization',
+                          'Real-time performance enhancement',
+                          'Advanced personalization algorithms'
+                        ],
+                        confidence: 95,
+                        eta: '50 minutes'
+                      });
+                      setShowActionModal(true);
+                    }}
                   >
                     Deploy Advanced AI
                   </Button>
