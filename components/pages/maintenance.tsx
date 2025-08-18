@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   Wrench, 
   Zap, 
@@ -22,6 +23,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export function MaintenancePage() {
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const energyData = [
     { name: '6AM', consumption: 12500, hvac: 6200, lighting: 3200, other: 3100, temperature: 22 },
@@ -173,7 +176,20 @@ export function MaintenancePage() {
   ];
 
   const createWorkOrder = (assetId: string, description: string) => {
-    alert(`Work Order Created:\n\nAsset: ${assetId}\nDescription: ${description}\nPriority: Auto-assigned based on AI analysis\nEstimated completion: 4-6 hours\n\nTechnician will be notified automatically.`);
+    setPendingAction({
+      title: 'Create Work Order',
+      type: 'maintenance',
+      description: `Work order for ${assetId}`,
+      details: [
+        `Asset: ${assetId}`,
+        `Description: ${description}`,
+        'Priority auto-assigned by AI',
+        'Technician notification sent'
+      ],
+      eta: '4-6 hours',
+      assignee: 'Maintenance Team'
+    });
+    setShowActionModal(true);
   };
 
   return (
@@ -695,6 +711,17 @@ export function MaintenancePage() {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

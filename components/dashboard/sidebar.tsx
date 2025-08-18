@@ -103,7 +103,7 @@ export function Sidebar({ currentPage, onPageChange, collapsed, onToggleCollapse
               <div className="w-2 h-2 bg-green-500 rounded-full status-online"></div>
               <span className="text-xs text-blue-300">System Status: Online</span>
             </div>
-            <div className="text-xs text-blue-400 mt-1">KORD - O'Hare Intl</div>
+            <div className="text-xs text-blue-400 mt-1">INTL - International Airport</div>
           </div>
         </div>
       )}

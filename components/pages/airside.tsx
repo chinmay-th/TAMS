@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   Plane, 
   Clock, 
@@ -22,6 +23,8 @@ export function AirsidePage() {
   const [selectedFlight, setSelectedFlight] = useState<string | null>(null);
   const [selectedKPI, setSelectedKPI] = useState<any>(null);
   const [showKPIModal, setShowKPIModal] = useState(false);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const runwayData = [
     { name: '10:00', runway10L: 8, runway14R: 12, runway22L: 6 },
@@ -58,21 +61,23 @@ export function AirsidePage() {
   ];
 
   const optimizeTSAT = (flightId: string) => {
-    // Simulate AI optimization
     const flight = flights.find(f => f.id === flightId);
     if (flight) {
-      setSelectedKPI({
-        id: flightId,
-        name: `TSAT Optimization - ${flightId}`,
-        value: new Date(new Date().getTime() + Math.random() * 600000).toLocaleTimeString(),
-        unit: 'time',
-        trend: 'up',
-        change: `+${Math.floor(Math.random() * 10) + 8}min`,
-        status: 'good',
-        target: flight.tsat,
-        description: `AI-optimized Target Start-up Approval Time for ${flightId} with predictive taxi time analysis`
+      setPendingAction({
+        title: `TSAT Optimization - ${flightId}`,
+        type: 'optimization',
+        description: `AI-optimized Target Start-up Approval Time for ${flightId}`,
+        details: [
+          'Predictive taxi time analysis',
+          'Traffic flow optimization',
+          'Weather impact assessment',
+          'Fuel efficiency calculation'
+        ],
+        assignee: 'Air Traffic Control',
+        eta: '5 minutes',
+        confidence: 94
       });
-      setShowKPIModal(true);
+      setShowActionModal(true);
     }
   };
 
@@ -317,7 +322,7 @@ export function AirsidePage() {
               </CardHeader>
               <CardContent>
                 <div className="font-mono text-sm bg-slate-100 p-4 rounded-lg">
-                  KORD 151851Z 28012KT 10SM FEW030 SCT250 24/18 A3012 RMK AO2 SLP203 T02440183 56014
+                  INTL 151851Z 28012KT 10SM FEW030 SCT250 24/18 A3012 RMK AO2 SLP203 T02440183 56014
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
                   <div>
@@ -373,6 +378,17 @@ export function AirsidePage() {
           </div>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

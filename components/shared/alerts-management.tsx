@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
+import { ActionConfirmationModal } from './action-confirmation-modal';
 import { 
   AlertTriangle, 
   CheckCircle, 
@@ -60,6 +61,8 @@ export function AlertsManagement({ isOpen, onClose }: AlertsManagementProps) {
   const [filterSeverity, setFilterSeverity] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const alerts: Alert[] = [
     {
@@ -228,16 +231,52 @@ export function AlertsManagement({ isOpen, onClose }: AlertsManagementProps) {
     const action = foundAlert?.suggestedActions?.find(a => a.id === actionId);
     
     if (action && foundAlert) {
-      alert(`Executing Action: ${action.title}\n\nAlert: ${foundAlert.title}\nType: ${action.type}\nPriority: ${action.priority}\nETA: ${action.eta}\n\nAction has been initiated and relevant teams notified.`);
+      setPendingAction({
+        title: action.title,
+        type: action.type,
+        priority: action.priority,
+        eta: action.eta,
+        assignee: foundAlert.assignee,
+        description: `Resolving alert: ${foundAlert.title}`,
+        details: [
+          'Action has been initiated',
+          'Relevant teams will be notified',
+          'Progress will be tracked automatically',
+          'Completion confirmation required'
+        ]
+      });
+      setShowActionModal(true);
     }
   };
 
   const acknowledgeAlert = (alertId: string) => {
-    alert(`Alert ${alertId} has been acknowledged.\n\nStatus updated and assigned team notified.`);
+    setPendingAction({
+      title: 'Acknowledge Alert',
+      type: 'workflow',
+      description: `Alert ${alertId} will be marked as acknowledged`,
+      details: [
+        'Status updated in system',
+        'Assigned team notified',
+        'Alert moved to acknowledged queue',
+        'Escalation timer paused'
+      ]
+    });
+    setShowActionModal(true);
   };
 
   const resolveAlert = (alertId: string) => {
-    alert(`Alert ${alertId} has been marked as resolved.\n\nIncident closed and documentation updated.`);
+    setPendingAction({
+      title: 'Resolve Alert',
+      type: 'workflow',
+      description: `Alert ${alertId} will be marked as resolved`,
+      details: [
+        'Incident closed in system',
+        'Documentation updated',
+        'Final report generated',
+        'Stakeholders notified'
+      ]
+    });
+    setShowActionModal(true);
   };
 
   return (
@@ -484,6 +523,18 @@ export function AlertsManagement({ isOpen, onClose }: AlertsManagementProps) {
             )}
           </div>
         </div>
+        
+        {pendingAction && (
+          <ActionConfirmationModal
+            isOpen={showActionModal}
+            onClose={() => setShowActionModal(false)}
+            onConfirm={() => {
+              // Action execution logic would go here
+              console.log('Action executed:', pendingAction);
+            }}
+            action={pendingAction}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

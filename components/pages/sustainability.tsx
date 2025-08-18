@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   Leaf, 
   Zap, 
@@ -23,6 +24,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export function SustainabilityPage() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const carbonData = [
     { month: 'Jan', actual: 4850, target: 4600, reduction: 12 },
@@ -207,11 +210,36 @@ export function SustainabilityPage() {
   const generateCarbonForecast = () => {
     const forecast = Math.floor(Math.random() * 500) + 3800;
     const recommendation = forecast > 4000 ? 'Implement additional energy efficiency measures' : 'On track for carbon neutrality goals';
-    alert(`AI Carbon Trajectory Forecast:\n\nPredicted annual emissions: ${forecast.toLocaleString()} tons CO2\nTarget: 3,600 tons CO2\nConfidence: 89%\n\nRecommendation: ${recommendation}`);
+    setPendingAction({
+      title: 'AI Carbon Trajectory Forecast',
+      type: 'forecast',
+      description: 'Predictive carbon emissions analysis',
+      details: [
+        `Predicted annual emissions: ${forecast.toLocaleString()} tons CO2`,
+        'Target: 3,600 tons CO2',
+        `Recommendation: ${recommendation}`,
+        'Machine learning model analysis'
+      ],
+      confidence: 89
+    });
+    setShowActionModal(true);
   };
 
   const exportComplianceData = (reportId: string) => {
-    alert(`Generating compliance export for ${reportId}...\n\nIncluding:\n- Verified emission data\n- Energy consumption logs\n- Waste diversion metrics\n- Noise monitoring data\n- Third-party verification certificates\n\nExport will be available for download in 2-3 minutes.`);
+    setPendingAction({
+      title: 'Export Compliance Data',
+      type: 'workflow',
+      description: `Generate compliance export for ${reportId}`,
+      details: [
+        'Verified emission data',
+        'Energy consumption logs',
+        'Waste diversion metrics',
+        'Noise monitoring data',
+        'Third-party verification certificates'
+      ],
+      eta: '2-3 minutes'
+    });
+    setShowActionModal(true);
   };
 
   return (
@@ -806,6 +834,17 @@ export function SustainabilityPage() {
           </div>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

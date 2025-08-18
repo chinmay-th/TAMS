@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   Car, 
   Bus, 
@@ -21,6 +22,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export function LandsidePage() {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const parkingData = [
     { name: '8AM', p1: 85, p2: 92, p3: 78, p4: 65, hourly: 45 },
@@ -58,7 +61,19 @@ export function LandsidePage() {
   const generateKerbForecast = (zone: string) => {
     const forecast = Math.floor(Math.random() * 20) + 70;
     const recommendation = forecast > 90 ? 'Deploy additional staff' : 'Current operations adequate';
-    alert(`AI Kerb Forecast for ${zone}:\n\nPredicted occupancy (next hour): ${forecast}%\nConfidence: 91%\nRecommendation: ${recommendation}`);
+    setPendingAction({
+      title: 'AI Kerb Forecast',
+      type: 'forecast',
+      description: `Predictive analysis for ${zone}`,
+      details: [
+        `Predicted occupancy (next hour): ${forecast}%`,
+        `Recommendation: ${recommendation}`,
+        'Real-time data integration active',
+        'Continuous monitoring enabled'
+      ],
+      confidence: 91
+    });
+    setShowActionModal(true);
   };
 
   return (
@@ -493,6 +508,17 @@ export function LandsidePage() {
           </div>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

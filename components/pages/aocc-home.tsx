@@ -83,7 +83,7 @@ export function AOCCHome() {
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-6 text-white card-enhanced glow-blue cyber-border">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold holographic-text neon-glow">Chicago O'Hare International Airport</h2>
+            <h2 className="text-2xl font-bold holographic-text neon-glow">International Airport Operations</h2>
             <p className="text-blue-100">Airport Operations Control Center - Live Status</p>
           </div>
           <div className="text-right">

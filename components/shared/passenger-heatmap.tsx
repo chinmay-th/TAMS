@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ActionConfirmationModal } from './action-confirmation-modal';
 import { 
   Users, 
   MapPin, 
@@ -34,6 +35,8 @@ export function PassengerHeatmap() {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [timeframe, setTimeframe] = useState('live');
   const [heatmapData, setHeatmapData] = useState<HeatmapZone[]>([]);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   useEffect(() => {
     // Simulate real-time data updates
@@ -168,9 +171,37 @@ export function PassengerHeatmap() {
 
   const generateAlert = (zone: HeatmapZone) => {
     if (zone.temperature === 'critical') {
-      alert(`CRITICAL ALERT: ${zone.name}\n\nDensity: ${zone.density}% (Critical threshold exceeded)\nDwell Time: ${zone.dwellTime} minutes\nFlow Rate: ${zone.flowRate} pax/hour\n\nRecommended Actions:\n• Deploy additional staff immediately\n• Open alternative routes\n• Implement crowd control measures\n• Update passenger information displays`);
+      setPendingAction({
+        title: `CRITICAL ALERT: ${zone.name}`,
+        type: 'workflow',
+        priority: 'high',
+        description: 'Critical passenger density threshold exceeded',
+        details: [
+          `Density: ${zone.density}% (Critical threshold exceeded)`,
+          `Dwell Time: ${zone.dwellTime} minutes`,
+          `Flow Rate: ${zone.flowRate} pax/hour`,
+          'Deploy additional staff immediately',
+          'Open alternative routes',
+          'Implement crowd control measures',
+          'Update passenger information displays'
+        ],
+        eta: '10 minutes'
+      });
+      setShowActionModal(true);
     } else {
-      alert(`Zone Analysis: ${zone.name}\n\nDensity: ${zone.density}%\nDwell Time: ${zone.dwellTime} minutes\nFlow Rate: ${zone.flowRate} pax/hour\nStatus: ${zone.temperature.toUpperCase()}\n\nNo immediate action required.`);
+      setPendingAction({
+        title: `Zone Analysis: ${zone.name}`,
+        type: 'forecast',
+        description: 'Passenger flow analysis results',
+        details: [
+          `Density: ${zone.density}%`,
+          `Dwell Time: ${zone.dwellTime} minutes`,
+          `Flow Rate: ${zone.flowRate} pax/hour`,
+          `Status: ${zone.temperature.toUpperCase()}`,
+          'No immediate action required'
+        ]
+      });
+      setShowActionModal(true);
     }
   };
 
@@ -425,6 +456,17 @@ export function PassengerHeatmap() {
           </Card>
         </div>
       </div>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

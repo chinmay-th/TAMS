@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   ShoppingCart, 
   Users, 
@@ -22,6 +23,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export function RetailPage() {
   const [selectedStore, setSelectedStore] = useState<string | null>(null);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const revenueData = [
     { name: '6AM', retail: 0, food: 500, parking: 1200, total: 1700 },
@@ -147,14 +150,20 @@ export function RetailPage() {
   ];
 
   const createDynamicOffer = (targetAudience: string) => {
-    const offers = [
-      'Free coffee with any meal purchase',
-      '15% off retail items over $50',
-      'Complimentary WiFi upgrade',
-      'Buy one get one 50% off snacks'
-    ];
-    const randomOffer = offers[Math.floor(Math.random() * offers.length)];
-    alert(`AI Dynamic Offer Created:\n\nTarget: ${targetAudience}\nOffer: ${randomOffer}\nExpiry: 2 hours\nDistribution: Push notification + digital displays\n\nExpected uplift: 15-25% revenue increase`);
+    setPendingAction({
+      title: 'Create Dynamic Offer',
+      type: 'offer',
+      description: `AI-generated offer for ${targetAudience}`,
+      details: [
+        'Target audience analyzed',
+        'Offer personalization applied',
+        'Distribution channels selected',
+        'Performance tracking enabled'
+      ],
+      impact: '15-25% revenue increase expected',
+      confidence: 87
+    });
+    setShowActionModal(true);
   };
 
   return (
@@ -693,6 +702,17 @@ export function RetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

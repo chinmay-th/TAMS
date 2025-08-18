@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   PlayCircle, 
   FileText, 
@@ -25,6 +26,8 @@ export function SOPConsolePage() {
   const [selectedSOP, setSelectedSOP] = useState<string | null>(null);
   const [activeSOP, setActiveSOP] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const sops = [
     {
@@ -293,15 +296,39 @@ export function SOPConsolePage() {
   ];
 
   const executeSOP = (sopId: string) => {
-    setActiveSOP(sopId);
     const sop = sops.find(s => s.id === sopId);
     if (sop) {
-      alert(`Executing SOP: ${sop.name}\n\nAll relevant teams have been notified.\nEstimated completion time: ${sop.estimatedTime}\n\nFirst step: ${sop.steps[0].title}\nAssigned to: ${sop.steps[0].assignedRole}`);
+      setPendingAction({
+        title: `Execute SOP: ${sop.name}`,
+        type: 'sop',
+        priority: sop.priority as 'high' | 'medium' | 'low',
+        description: sop.description,
+        details: [
+          `First step: ${sop.steps[0].title}`,
+          `Assigned to: ${sop.steps[0].assignedRole}`,
+          'All relevant teams notified',
+          'Evidence collection enabled'
+        ],
+        eta: sop.estimatedTime
+      });
+      setShowActionModal(true);
     }
   };
 
   const completeStep = (sopId: string, stepId: number) => {
-    alert(`Step ${stepId} completed for ${sopId}\n\nEvidence collected and logged.\nProceeding to next step automatically.`);
+    setPendingAction({
+      title: `Complete Step ${stepId}`,
+      type: 'workflow',
+      description: `Mark step ${stepId} as completed for ${sopId}`,
+      details: [
+        'Evidence collected and logged',
+        'Step verification completed',
+        'Proceeding to next step',
+        'Progress tracking updated'
+      ],
+      eta: '2 minutes'
+    });
+    setShowActionModal(true);
   };
 
   const filteredSOPs = sops.filter(sop => 
@@ -783,6 +810,17 @@ export function SOPConsolePage() {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

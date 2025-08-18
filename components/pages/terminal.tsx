@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { KPIDetailModal } from '@/components/shared/kpi-detail-modal';
 import { PassengerHeatmap } from '@/components/shared/passenger-heatmap';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   Users, 
   Clock, 
@@ -23,6 +24,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export function TerminalPage() {
   const [selectedKPI, setSelectedKPI] = useState<any>(null);
   const [showKPIModal, setShowKPIModal] = useState(false);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
   
   const queueData = [
     { name: '14:00', checkpoint_A: 8, checkpoint_B: 12, checkpoint_C: 15, checkpoint_D: 6 },
@@ -61,7 +64,20 @@ export function TerminalPage() {
     if (checkpoint) {
       const prediction = Math.floor(Math.random() * 10) + 5;
       const staffingAdvice = prediction > 15 ? 'Add 2 more lanes' : 'Current staffing adequate';
-      alert(`AI Queue Prediction for ${checkpoint.name}:\n\n15-min forecast: ${prediction} minutes\nConfidence: 87%\nRecommendation: ${staffingAdvice}`);
+      setPendingAction({
+        title: `AI Queue Prediction - ${checkpoint.name}`,
+        type: 'forecast',
+        description: 'Predictive queue analysis and optimization',
+        details: [
+          `15-minute forecast: ${prediction} minutes`,
+          `Recommendation: ${staffingAdvice}`,
+          'Real-time passenger flow analysis',
+          'Staffing optimization suggestions'
+        ],
+        confidence: 87,
+        eta: '15 minutes'
+      });
+      setShowActionModal(true);
     }
   };
 
@@ -413,6 +429,17 @@ export function TerminalPage() {
           isOpen={showKPIModal} 
           onClose={() => setShowKPIModal(false)} 
           kpi={selectedKPI} 
+        />
+      )}
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
         />
       )}
     </div>

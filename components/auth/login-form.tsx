@@ -45,7 +45,7 @@ export function LoginForm() {
           </div>
           <h1 className="text-3xl font-bold text-white mb-2 holographic-text">Astrikos AI S!aP</h1>
           <p className="text-slate-300">Total Airport Management System</p>
-          <p className="text-sm text-slate-400 mt-2">Chicago O'Hare International Airport</p>
+          <p className="text-sm text-slate-400 mt-2">International Airport Operations</p>
         </div>
 
         <Card className="sci-fi-card backdrop-blur-lg animate-fade-in-up">

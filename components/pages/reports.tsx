@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ActionConfirmationModal } from '@/components/shared/action-confirmation-modal';
 import { 
   FileText, 
   Download, 
@@ -21,6 +22,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export function ReportsPage() {
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
 
   const dailyOpsData = [
     { time: '06:00', flights: 12, delays: 2, onTime: 83, passengers: 2400 },
@@ -122,14 +125,39 @@ export function ReportsPage() {
   const generateReport = (reportId: string) => {
     const report = reports.find(r => r.id === reportId);
     if (report) {
-      alert(`Generating ${report.name}...\n\nReport will include:\n- Latest operational data\n- Performance metrics\n- Trend analysis\n- Recommendations\n\nEstimated completion: 2-3 minutes\nRecipients will be notified automatically.`);
+      setPendingAction({
+        title: `Generate ${report.name}`,
+        type: 'workflow',
+        description: 'Automated report generation with latest data',
+        details: [
+          'Latest operational data',
+          'Performance metrics analysis',
+          'Trend analysis and forecasting',
+          'AI-generated recommendations',
+          'Recipients notified automatically'
+        ],
+        eta: '2-3 minutes'
+      });
+      setShowActionModal(true);
     }
   };
 
   const downloadReport = (reportId: string) => {
     const report = reports.find(r => r.id === reportId);
     if (report) {
-      alert(`Downloading ${report.name}\n\nFile size: ${report.size}\nFormat: PDF with Excel data appendix\n\nDownload will begin shortly...`);
+      setPendingAction({
+        title: `Download ${report.name}`,
+        type: 'workflow',
+        description: 'Prepare report download',
+        details: [
+          `File size: ${report.size}`,
+          'Format: PDF with Excel data appendix',
+          'Secure download link generation',
+          'Download will begin automatically'
+        ],
+        eta: '30 seconds'
+      });
+      setShowActionModal(true);
     }
   };
 
@@ -615,6 +643,17 @@ export function ReportsPage() {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
     </div>
   );
 }

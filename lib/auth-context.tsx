@@ -50,40 +50,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: 'aocc@airport.com',
         role: 'aocc_operator',
         name: 'Sarah Chen',
-        airport_id: 'KORD',
-        airport_name: 'Chicago O\'Hare International'
+        airport_id: 'INTL',
+        airport_name: 'International Airport'
       },
       {
         id: '2',
         email: 'airside@airport.com',
         role: 'airside_supervisor',
         name: 'Mike Rodriguez',
-        airport_id: 'KORD',
-        airport_name: 'Chicago O\'Hare International'
+        airport_id: 'INTL',
+        airport_name: 'International Airport'
       },
       {
         id: '3',
         email: 'terminal@airport.com',
         role: 'terminal_supervisor',
         name: 'Emily Johnson',
-        airport_id: 'KORD',
-        airport_name: 'Chicago O\'Hare International'
+        airport_id: 'INTL',
+        airport_name: 'International Airport'
       },
       {
         id: '4',
         email: 'security@airport.com',
         role: 'security_supervisor',
         name: 'David Kim',
-        airport_id: 'KORD',
-        airport_name: 'Chicago O\'Hare International'
+        airport_id: 'INTL',
+        airport_name: 'International Airport'
       },
       {
         id: '5',
         email: 'maintenance@airport.com',
         role: 'maintenance_engineer',
         name: 'Lisa Thompson',
-        airport_id: 'KORD',
-        airport_name: 'Chicago O\'Hare International'
+        airport_id: 'INTL',
+        airport_name: 'International Airport'
       }
     ];
 
