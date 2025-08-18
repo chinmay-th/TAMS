@@ -27,7 +27,8 @@ export function TerminalPage() {
   const [showActionModal, setShowActionModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<any>(null);
   
-  const queueData = [
+  ArrowRight,
+  Plane
     { name: '14:00', checkpoint_A: 8, checkpoint_B: 12, checkpoint_C: 15, checkpoint_D: 6 },
     { name: '14:15', checkpoint_A: 12, checkpoint_B: 15, checkpoint_C: 18, checkpoint_D: 8 },
     { name: '14:30', checkpoint_A: 15, checkpoint_B: 18, checkpoint_C: 22, checkpoint_D: 10 },
