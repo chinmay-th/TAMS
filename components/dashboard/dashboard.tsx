@@ -14,7 +14,7 @@ import { RetailPage } from '../pages/retail';
 import { SustainabilityPage } from '../pages/sustainability';
 import { SOPConsolePage } from '../pages/sop-console';
 import { ReportsPage } from '../pages/reports';
-import { SimulationPage } from '../pages/simulation';
+import SimulationPage from '../pages/simulation';
 
 export type PageType = 
   | 'aocc'
