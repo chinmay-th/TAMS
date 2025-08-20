@@ -481,6 +481,7 @@ export function SimulationPage() {
   const totalAnnualValue = tangibleResults.reduce((sum, result) => sum + (result.annualValue || 0), 0);
 
   return (
+  return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">AI Simulation & Review Center</h2>
@@ -1573,5 +1574,6 @@ export function SimulationPage() {
         />
       )}
     </div>
+  );
   );
 }
