@@ -816,7 +816,7 @@ const SimulationPage: React.FC = () => {
           >
             {useCases.map(useCase => (
               <option key={useCase.id} value={useCase.id}>
-                {useCase.name} ({useCase.duration})
+      <Tabs defaultValue="digital-twin" className="w-full">
               </option>
             ))}
           </select>
@@ -828,11 +828,16 @@ const SimulationPage: React.FC = () => {
 
       <Tabs defaultValue="simulation" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="digital-twin">3D Digital Twin</TabsTrigger>
           <TabsTrigger value="simulation">3D Simulation</TabsTrigger>
           <TabsTrigger value="analysis">Step Analysis</TabsTrigger>
           <TabsTrigger value="intelligence">AI Intelligence</TabsTrigger>
-          <TabsTrigger value="results">Tangible Results</TabsTrigger>
+          <TabsTrigger value="ai-insights">AI Analytics</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="digital-twin" className="space-y-6">
+          <DigitalTwinSimulation />
+        </TabsContent>
 
         <TabsContent value="simulation" className="space-y-6">
           {/* Enhanced 3D Simulation Viewport */}
@@ -1333,5 +1338,469 @@ const SimulationPage: React.FC = () => {
     </div>
   );
 };
+
+// 3D Digital Twin Simulation Component
+function DigitalTwinSimulation() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isRunning, setIsRunning] = useState(false);
+  const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
+  const [cameraPosition, setCameraPosition] = useState({ x: 0, y: 0, z: 5, rotX: 0, rotY: 0 });
+  const [digitalTwinData, setDigitalTwinData] = useState({
+    terminals: [
+      { id: 'T1', name: 'Terminal 1', status: 'operational', load: 78, passengers: 2400, gates: 12, active: true },
+      { id: 'T2', name: 'Terminal 2', status: 'operational', load: 85, passengers: 3200, gates: 16, active: true },
+      { id: 'T3', name: 'Terminal 3', status: 'maintenance', load: 45, passengers: 1800, gates: 10, active: false }
+    ],
+    runways: [
+      { id: 'RW10L', name: 'Runway 10L/28R', status: 'active', traffic: 92, operations: 45, weather: 'clear' },
+      { id: 'RW14R', name: 'Runway 14R/32L', status: 'active', traffic: 78, operations: 38, weather: 'clear' },
+      { id: 'RW22L', name: 'Runway 22L/04R', status: 'closed', traffic: 0, operations: 0, weather: 'maintenance' }
+    ],
+    systems: [
+      { id: 'BHS', name: 'Baggage Handling', status: 'operational', efficiency: 94, throughput: 12500, alerts: 0 },
+      { id: 'HVAC', name: 'Climate Control', status: 'operational', efficiency: 87, load: 78, alerts: 1 },
+      { id: 'POWER', name: 'Power Systems', status: 'operational', efficiency: 96, load: 82, alerts: 0 },
+      { id: 'SECURITY', name: 'Security Systems', status: 'operational', efficiency: 98, coverage: 100, alerts: 0 },
+      { id: 'COMMS', name: 'Communications', status: 'operational', efficiency: 99, uptime: 99.8, alerts: 0 }
+    ],
+    sensors: [
+      { id: 'TEMP_001', type: 'Temperature', location: 'Terminal 1', value: 23.5, status: 'normal' },
+      { id: 'FLOW_002', type: 'Passenger Flow', location: 'Security A', value: 180, status: 'high' },
+      { id: 'NOISE_003', type: 'Noise Level', location: 'Runway 10L', value: 68, status: 'normal' },
+      { id: 'AIR_004', type: 'Air Quality', location: 'Terminal 2', value: 85, status: 'good' },
+      { id: 'POWER_005', type: 'Power Load', location: 'Main Grid', value: 22.4, status: 'normal' }
+    ]
+  });
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<any>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const render = () => {
+      // Clear canvas
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw grid
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < canvas.width; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+      }
+      for (let i = 0; i < canvas.height; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+      }
+
+      // Draw terminals
+      digitalTwinData.terminals.forEach((terminal, index) => {
+        const x = 150 + index * 200;
+        const y = 150;
+        const width = 120;
+        const height = 80;
+
+        // Terminal building
+        ctx.fillStyle = terminal.active ? 'rgba(59, 130, 246, 0.3)' : 'rgba(156, 163, 175, 0.3)';
+        ctx.fillRect(x, y, width, height);
+        ctx.strokeStyle = terminal.active ? '#3b82f6' : '#9ca3af';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, width, height);
+
+        // Load indicator
+        const loadHeight = (terminal.load / 100) * height;
+        ctx.fillStyle = terminal.load > 90 ? '#ef4444' : terminal.load > 75 ? '#f59e0b' : '#22c55e';
+        ctx.fillRect(x + width - 10, y + height - loadHeight, 8, loadHeight);
+
+        // Terminal label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '14px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText(terminal.name, x + width / 2, y + height / 2);
+        ctx.font = '10px Inter';
+        ctx.fillText(`${terminal.passengers} pax`, x + width / 2, y + height / 2 + 15);
+        ctx.fillText(`${terminal.load}% load`, x + width / 2, y + height / 2 + 28);
+
+        // Passenger flow animation
+        if (isRunning && terminal.active) {
+          const time = Date.now() / 1000;
+          for (let i = 0; i < 5; i++) {
+            const passengerX = x + 20 + (i * 20) + Math.sin(time + i) * 10;
+            const passengerY = y + 40 + Math.cos(time + i) * 5;
+            ctx.fillStyle = '#22c55e';
+            ctx.beginPath();
+            ctx.arc(passengerX, passengerY, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+
+      // Draw runways
+      digitalTwinData.runways.forEach((runway, index) => {
+        const x = 100;
+        const y = 350 + index * 60;
+        const width = 500;
+        const height = 20;
+
+        // Runway
+        ctx.fillStyle = runway.status === 'active' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)';
+        ctx.fillRect(x, y, width, height);
+        ctx.strokeStyle = runway.status === 'active' ? '#22c55e' : '#ef4444';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, width, height);
+
+        // Aircraft animation
+        if (isRunning && runway.status === 'active') {
+          const time = Date.now() / 2000;
+          const aircraftX = x + (time % 1) * width;
+          ctx.fillStyle = '#3b82f6';
+          ctx.fillRect(aircraftX - 10, y + 5, 20, 10);
+        }
+
+        // Runway label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText(runway.name, x + 10, y + 15);
+        ctx.fillText(`${runway.operations} ops/day`, x + 150, y + 15);
+      });
+
+      // Draw system status indicators
+      digitalTwinData.systems.forEach((system, index) => {
+        const x = 50;
+        const y = 50 + index * 30;
+        
+        // Status indicator
+        ctx.fillStyle = system.status === 'operational' ? '#22c55e' : '#ef4444';
+        ctx.beginPath();
+        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // System name and efficiency
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '11px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText(`${system.name}: ${system.efficiency}%`, x + 15, y + 4);
+      });
+
+      // Draw sensor data overlay
+      if (selectedSystem) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(canvas.width - 250, 50, 200, 200);
+        ctx.strokeStyle = '#3b82f6';
+        ctx.strokeRect(canvas.width - 250, 50, 200, 200);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '14px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText('System Details', canvas.width - 240, 75);
+        
+        const system = digitalTwinData.systems.find(s => s.id === selectedSystem);
+        if (system) {
+          ctx.font = '11px Inter';
+          ctx.fillText(`Name: ${system.name}`, canvas.width - 240, 95);
+          ctx.fillText(`Status: ${system.status}`, canvas.width - 240, 110);
+          ctx.fillText(`Efficiency: ${system.efficiency}%`, canvas.width - 240, 125);
+          ctx.fillText(`Alerts: ${system.alerts}`, canvas.width - 240, 140);
+        }
+      }
+
+      if (isRunning) {
+        requestAnimationFrame(render);
+      }
+    };
+
+    render();
+    if (isRunning) {
+      const interval = setInterval(render, 16); // 60 FPS
+      return () => clearInterval(interval);
+    }
+  }, [isRunning, selectedSystem, digitalTwinData]);
+
+  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // Check if clicked on a system indicator
+    digitalTwinData.systems.forEach((system, index) => {
+      const systemX = 50;
+      const systemY = 50 + index * 30;
+      const distance = Math.sqrt((x - systemX) ** 2 + (y - systemY) ** 2);
+      
+      if (distance < 20) {
+        setSelectedSystem(system.id);
+        setPendingAction({
+          title: `Analyze ${system.name}`,
+          type: 'forecast',
+          description: `Deep analysis of ${system.name} performance`,
+          details: [
+            `Current Efficiency: ${system.efficiency}%`,
+            `Status: ${system.status}`,
+            `Active Alerts: ${system.alerts}`,
+            'Real-time monitoring active',
+            'Predictive analytics enabled'
+          ],
+          confidence: 94
+        });
+        setShowActionModal(true);
+      }
+    });
+  };
+
+  const executeDigitalTwinAction = (actionType: string) => {
+    setPendingAction({
+      title: `Execute ${actionType}`,
+      type: 'control',
+      description: `Digital Twin ${actionType} operation`,
+      details: [
+        'Real-time data synchronization',
+        'AI model validation',
+        'System state update',
+        'Performance optimization',
+        'Predictive analysis refresh'
+      ],
+      eta: '2-3 minutes'
+    });
+    setShowActionModal(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-bold text-white holographic-text">3D Digital Twin Simulation</h3>
+        <div className="flex items-center space-x-2">
+          <Badge variant="outline" className="flex items-center space-x-1">
+            <Database className="w-3 h-3" />
+            <span>Real-time Sync</span>
+          </Badge>
+          <Badge variant="outline" className="flex items-center space-x-1">
+            <Wifi className="w-3 h-3" />
+            <span>IoT Connected</span>
+          </Badge>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* 3D Digital Twin Viewport */}
+        <div className="lg:col-span-3">
+          <Card className="card-enhanced cyber-border">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center space-x-2 text-white neon-glow">
+                  <Move3D className="w-5 h-5 text-blue-400" />
+                  <span>Digital Twin Viewport</span>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full status-online"></div>
+                    <span className="text-xs text-green-400">Live</span>
+                  </div>
+                </CardTitle>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    size="sm"
+                    onClick={() => setIsRunning(!isRunning)}
+                    className="sci-fi-button"
+                  >
+                    {isRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {isRunning ? 'Pause' : 'Start'}
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => executeDigitalTwinAction('Reset')}>
+                    <RotateCcw className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="relative">
+                <canvas
+                  ref={canvasRef}
+                  width={800}
+                  height={600}
+                  className="w-full h-auto bg-slate-900 rounded-lg border border-blue-500/30 cursor-crosshair"
+                  onClick={handleCanvasClick}
+                />
+                
+                {/* 3D Controls Overlay */}
+                <div className="absolute top-4 right-4 space-y-2">
+                  <div className="bg-slate-800/90 backdrop-blur-sm rounded-lg p-2 border border-blue-500/30">
+                    <div className="grid grid-cols-2 gap-1">
+                      <Button size="sm" variant="ghost" className="p-1">
+                        <ZoomIn className="w-3 h-3" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="p-1">
+                        <ZoomOut className="w-3 h-3" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="p-1">
+                        <RotateCw className="w-3 h-3" />
+                      </Button>
+                      <Button size="sm" variant="ghost" className="p-1">
+                        <Camera className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Real-time Metrics Overlay */}
+                <div className="absolute bottom-4 left-4 bg-slate-800/90 backdrop-blur-sm rounded-lg p-3 border border-blue-500/30">
+                  <div className="grid grid-cols-3 gap-4 text-xs">
+                    <div>
+                      <span className="text-blue-300">Active Terminals:</span>
+                      <p className="text-white font-bold">{digitalTwinData.terminals.filter(t => t.active).length}/3</p>
+                    </div>
+                    <div>
+                      <span className="text-blue-300">Total Passengers:</span>
+                      <p className="text-white font-bold">{digitalTwinData.terminals.reduce((sum, t) => sum + t.passengers, 0).toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <span className="text-blue-300">System Health:</span>
+                      <p className="text-green-400 font-bold">98.2%</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Digital Twin Controls */}
+        <div className="space-y-6">
+          {/* System Status */}
+          <Card className="sci-fi-card">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <Cpu className="w-5 h-5 text-green-400" />
+                <span>System Status</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {digitalTwinData.systems.map((system) => (
+                  <div 
+                    key={system.id} 
+                    className={`p-3 rounded-lg cursor-pointer transition-all ${
+                      selectedSystem === system.id ? 'bg-blue-500/20 border border-blue-500' : 'bg-blue-500/10 hover:bg-blue-500/15'
+                    }`}
+                    onClick={() => setSelectedSystem(system.id)}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-white font-medium text-sm">{system.name}</span>
+                      <div className={`w-2 h-2 rounded-full ${
+                        system.status === 'operational' ? 'bg-green-500 status-online' : 'bg-red-500'
+                      }`}></div>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-blue-300">Efficiency:</span>
+                      <span className="text-white">{system.efficiency}%</span>
+                    </div>
+                    <Progress value={system.efficiency} className="h-1 mt-1" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* IoT Sensors */}
+          <Card className="sci-fi-card">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <Activity className="w-5 h-5 text-blue-400" />
+                <span>IoT Sensors</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {digitalTwinData.sensors.map((sensor) => (
+                  <div key={sensor.id} className="flex items-center justify-between p-2 bg-blue-500/10 rounded">
+                    <div>
+                      <p className="text-white text-xs font-medium">{sensor.type}</p>
+                      <p className="text-blue-300 text-xs">{sensor.location}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-white text-xs font-bold">{sensor.value}</p>
+                      <Badge variant={sensor.status === 'normal' ? 'secondary' : 'destructive'} className="text-xs">
+                        {sensor.status}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Digital Twin Actions */}
+          <Card className="sci-fi-card">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-white">
+                <Target className="w-5 h-5 text-purple-400" />
+                <span>Twin Actions</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <Button 
+                  className="w-full sci-fi-button" 
+                  size="sm"
+                  onClick={() => executeDigitalTwinAction('Sync Data')}
+                >
+                  <Database className="w-4 h-4 mr-2" />
+                  Sync Real-time Data
+                </Button>
+                <Button 
+                  className="w-full sci-fi-button" 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => executeDigitalTwinAction('Run Prediction')}
+                >
+                  <Brain className="w-4 h-4 mr-2" />
+                  AI Prediction
+                </Button>
+                <Button 
+                  className="w-full sci-fi-button" 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => executeDigitalTwinAction('Optimize Systems')}
+                >
+                  <Zap className="w-4 h-4 mr-2" />
+                  Optimize Performance
+                </Button>
+                <Button 
+                  className="w-full sci-fi-button" 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => executeDigitalTwinAction('Generate Report')}
+                >
+                  <Eye className="w-4 h-4 mr-2" />
+                  Generate Report
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+      {pendingAction && (
+        <ActionConfirmationModal
+          isOpen={showActionModal}
+          onClose={() => setShowActionModal(false)}
+          onConfirm={() => {
+            console.log('Digital Twin Action executed:', pendingAction);
+          }}
+          action={pendingAction}
+        />
+      )}
+    </div>
+  );
+}
 
 export default SimulationPage;
