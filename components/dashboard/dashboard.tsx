@@ -14,6 +14,7 @@ import { RetailPage } from '../pages/retail';
 import { SustainabilityPage } from '../pages/sustainability';
 import { SOPConsolePage } from '../pages/sop-console';
 import { ReportsPage } from '../pages/reports';
+import { SimulationPage } from '../pages/simulation';
 
 export type PageType = 
   | 'aocc'
@@ -25,7 +26,8 @@ export type PageType =
   | 'retail'
   | 'sustainability'
   | 'sop'
-  | 'reports';
+  | 'reports'
+  | 'simulation';
 
 export function Dashboard() {
   const { user } = useAuth();
@@ -54,6 +56,8 @@ export function Dashboard() {
         return <SOPConsolePage />;
       case 'reports':
         return <ReportsPage />;
+      case 'simulation':
+        return <SimulationPage />;
       default:
         return <AOCCHome />;
     }

@@ -43,6 +43,7 @@ const pageLabels: Record<PageType, string> = {
   sustainability: 'Sustainability Management',
   sop: 'Standard Operating Procedures',
   reports: 'Reports & Analytics',
+  simulation: 'AI Simulation & Review Center',
 };
 
 export function Header({ user, currentPage, onToggleSidebar }: HeaderProps) {

@@ -13,6 +13,7 @@ import {
   Leaf,
   FileText,
   PlayCircle,
+  Brain,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
@@ -37,6 +38,7 @@ const menuItems = [
   { id: 'sustainability', label: 'Sustainability', icon: Leaf, roles: ['sustainability_manager', 'administrator'] },
   { id: 'sop', label: 'SOP Console', icon: PlayCircle, roles: ['aocc_operator', 'security_supervisor', 'administrator'] },
   { id: 'reports', label: 'Reports', icon: FileText, roles: ['aocc_operator', 'administrator'] },
+  { id: 'simulation', label: 'AI Simulation', icon: Brain, roles: ['aocc_operator', 'administrator'] },
 ];
 
 export function Sidebar({ currentPage, onPageChange, collapsed, onToggleCollapse, userRole }: SidebarProps) {
